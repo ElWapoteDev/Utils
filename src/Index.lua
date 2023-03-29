@@ -75,7 +75,7 @@ function Utils.printTable(tbl)
 	print("}")
 end
 
-function Utils.HTTPRequest(url: string, metodo: string, headers: any, cuerpo: any, OnlyBody: boolean)
+function Utils.HTTPRequest(url: string, metodo: string, headers: any, cookies: any, cuerpo: any, OnlyBody: boolean)
 	local NoBody = { 'GET', 'HEAD', 'DELETE', 'OPTIONS', 'TRACE' };
 	Utils.MiAssert(url, 'No url provided');
 	Utils.MiAssert(metodo, 'No method provided');
@@ -92,6 +92,10 @@ function Utils.HTTPRequest(url: string, metodo: string, headers: any, cuerpo: an
 
 	if (cuerpo) then
 		Opciones['Body'] = Http:JSONEncode(cuerpo);
+	end;
+	
+	if (cookies) then
+		Opciones['Cookies'] = cookies;
 	end;
 
 	local succ, err = pcall(function()
